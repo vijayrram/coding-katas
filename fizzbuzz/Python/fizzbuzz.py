@@ -13,16 +13,11 @@ def fizzbuzz(inp: int) -> str:
     if not isinstance(inp, int):
         raise TypeError("Invalid input type.")
 
-    if inp % 3 == 0 and inp % 5 == 0:
-        return "FizzBuzz"
+    output = ""
+    output += "Fizz" if inp % 3 == 0 else ""
+    output += "Buzz" if inp % 5 == 0 else ""
 
-    if inp % 3 == 0:
-        return "Fizz"
-
-    if inp % 5 == 0:
-        return "Buzz"
-
-    return str(inp)
+    return output if output else str(inp)
 
 
 if __name__ == "__main__":
