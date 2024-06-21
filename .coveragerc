@@ -1,0 +1,5 @@
+# Ignore dunder main
+
+[report]
+exclude_also = 
+    if __name__ == .__main__.:
