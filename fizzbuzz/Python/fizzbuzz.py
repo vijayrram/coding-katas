@@ -1,23 +1,33 @@
 """FizzBuzz Coding Kata"""
 
-FIZZBUZZ_RULES: list[tuple[int, str]] = [
-    (3, "Fizz"),
-    (5, "Buzz"),
+from typing import NamedTuple
+
+
+class FizzBuzzRule(NamedTuple):
+    """Class used to define FizzBuzz rules."""
+
+    divisor: int
+    response: str
+
+
+FIZZBUZZ_RULES: list[FizzBuzzRule] = [
+    FizzBuzzRule(divisor=3, response="Fizz"),
+    FizzBuzzRule(divisor=5, response="Buzz"),
 ]
 
 
-def apply_rule(inp: int, rule: tuple[int, str]) -> str:
+def apply_rule(inp: int, rule: FizzBuzzRule) -> str:
     """Helper function used to apply the FizzBuzz rule to the input value.
 
     Args:
         inp (int): Input value.
-        rule (tuple[int, str]): Rule to be applied.
+        rule (FizzBuzzRule): Rule to be applied.
 
     Returns:
         str: Response to be returned.
     """
 
-    return rule[1] if inp % rule[0] == 0 else ""
+    return rule.response if inp % rule.divisor == 0 else ""
 
 
 def fizzbuzz(inp: int) -> str | int:
