@@ -1,6 +1,12 @@
 """FizzBuzz Coding Kata"""
 
-def fizzbuzz(inp: int) -> str:
+FIZZBUZZ_RULES: list[tuple[int, str]] = [
+    (3, "Fizz"),
+    (5, "Buzz"),
+]
+
+
+def fizzbuzz(inp: int) -> str | int:
     """Helper used to modify input integers to the correct response for the FizzBuzz game.
 
     Args:
@@ -14,8 +20,8 @@ def fizzbuzz(inp: int) -> str:
         raise TypeError("Invalid input type.")
 
     output = ""
-    output += "Fizz" if inp % 3 == 0 else ""
-    output += "Buzz" if inp % 5 == 0 else ""
+    for rule in FIZZBUZZ_RULES:
+        output += rule[1] if inp % rule[0] == 0 else ""
 
     return output if output else str(inp)
 
