@@ -14,3 +14,8 @@ def fizzbuzz(inp: int) -> str:
         raise TypeError("Invalid input type.")
 
     return str(inp)
+
+
+if __name__ == "__main__":
+    for num in range(1, 101):
+        print(fizzbuzz(num))
