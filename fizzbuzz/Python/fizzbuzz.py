@@ -10,4 +10,7 @@ def fizzbuzz(inp: int) -> str:
         str: Response to be uttered instead.
     """
 
+    if not isinstance(inp, int):
+        raise TypeError("Invalid input type.")
+
     return str(inp)
