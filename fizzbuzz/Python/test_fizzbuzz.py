@@ -55,3 +55,16 @@ def test_fizzbuzz_div_by_5_only(inp: int):
     response = fizzbuzz(inp)
 
     assert response == "Buzz"
+
+
+@pytest.mark.parametrize("inp", [15, 30, 45])
+def test_fizzbuzz_div_by_15(inp: int):
+    """Test script to check the response of the fizzbuzz function for numbers divisible by 15.
+
+    Args:
+        inp (int): Input number for the fizzbuzz function.
+    """
+
+    response = fizzbuzz(inp)
+
+    assert response == "FizzBuzz"
