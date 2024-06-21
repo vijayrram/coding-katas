@@ -16,6 +16,9 @@ def fizzbuzz(inp: int) -> str:
     if inp % 3 == 0:
         return "Fizz"
 
+    if inp % 5 == 0:
+        return "Buzz"
+
     return str(inp)
 
 
