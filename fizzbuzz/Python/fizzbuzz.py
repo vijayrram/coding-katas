@@ -16,9 +16,7 @@ def fizzbuzz(inp: int) -> str | int:
     if not isinstance(inp, int):
         raise TypeError("Invalid input type.")
 
-    output = ""
-    for rule in FIZZBUZZ_RULES:
-        output += apply_rule(inp, rule)
+    output = "".join(apply_rule(inp, rule) for rule in FIZZBUZZ_RULES)
 
     return output if output else str(inp)
 
