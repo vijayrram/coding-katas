@@ -29,3 +29,16 @@ def test_fizzbuzz_invalid_input_type(inp: typing.Any):
 
     with pytest.raises(TypeError, match=r"^Invalid input type.$"):
         fizzbuzz(inp)
+
+
+@pytest.mark.parametrize("inp", [3, 6, 9])
+def test_fizzbuzz_div_by_3_only(inp: int):
+    """Test script to check the response of the fizzbuzz function for numbers divisible by 3 only.
+
+    Args:
+        inp (int): Input number for the fizzbuzz function.
+    """
+
+    response = fizzbuzz(inp)
+
+    assert response == "Fizz"

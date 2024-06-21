@@ -13,6 +13,9 @@ def fizzbuzz(inp: int) -> str:
     if not isinstance(inp, int):
         raise TypeError("Invalid input type.")
 
+    if inp % 3 == 0:
+        return "Fizz"
+
     return str(inp)
 
 
