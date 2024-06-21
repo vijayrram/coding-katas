@@ -3,22 +3,22 @@
 from fizzbuzz_rules import FIZZBUZZ_RULES, apply_rule
 
 
-def fizzbuzz(inp: int) -> str | int:
+def fizzbuzz(number: int) -> str | int:
     """Helper used to modify input integers to the correct response for the FizzBuzz game.
 
     Args:
-        inp (int): Number to be modified.
+        number (int): Number to be modified.
 
     Returns:
         str: Response to be uttered instead.
     """
 
-    if not isinstance(inp, int):
+    if not isinstance(number, int):
         raise TypeError("Invalid input type.")
 
-    output = "".join(apply_rule(inp, rule) for rule in FIZZBUZZ_RULES)
+    output = "".join(apply_rule(number, rule) for rule in FIZZBUZZ_RULES)
 
-    return output if output else str(inp)
+    return output if output else str(number)
 
 
 if __name__ == "__main__":

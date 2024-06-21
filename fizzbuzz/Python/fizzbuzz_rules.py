@@ -16,15 +16,15 @@ FIZZBUZZ_RULES: list[FizzBuzzRule] = [
 ]
 
 
-def apply_rule(inp: int, rule: FizzBuzzRule) -> str:
+def apply_rule(number: int, rule: FizzBuzzRule) -> str:
     """Helper function used to apply the FizzBuzz rule to the input value.
 
     Args:
-        inp (int): Input value.
+        number (int): Input value.
         rule (FizzBuzzRule): Rule to be applied.
 
     Returns:
         str: Response to be returned.
     """
 
-    return rule.response if inp % rule.divisor == 0 else ""
+    return rule.response if number % rule.divisor == 0 else ""
