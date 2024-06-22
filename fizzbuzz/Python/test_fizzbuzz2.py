@@ -150,3 +150,17 @@ def test_fizzbuzz2_containing_3_and_5_and_divisible_by_only_3(number: int):
     response = fizzbuzz2(number)
 
     assert response == "FizzBuzzFizz"
+
+
+@pytest.mark.parametrize("number", [130])
+def test_fizzbuzz2_containing_only_3_and_divisible_by_only_5(number: int):
+    """Test script to check the response of the fizzbuzz2 function for numbers containing and
+    divisible by 3 but not 5.
+
+    Args:
+        number (int): Input number for the fizzbuzz2 function.
+    """
+
+    response = fizzbuzz2(number)
+
+    assert response == "FizzBuzz"
