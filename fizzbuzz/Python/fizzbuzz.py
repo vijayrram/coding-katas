@@ -3,83 +3,85 @@
 from typing import Callable, NamedTuple, TypeAlias
 
 
-FizzBuzzRuleApplier: TypeAlias = Callable[[int], str]
-FizzBuzzRules: TypeAlias = list[FizzBuzzRuleApplier]
-FizzBuzzCondition: TypeAlias = Callable[[int, int], bool]
+class FizzBuzzFactory:
+    """Class containing methods to create a FizzBuzz game."""
 
+    FizzBuzzRuleApplier: TypeAlias = Callable[[int], str]
+    FizzBuzzRules: TypeAlias = list[FizzBuzzRuleApplier]
+    FizzBuzzCondition: TypeAlias = Callable[[int, int], bool]
 
-class FizzBuzzRule(NamedTuple):
-    """Class used to define FizzBuzz rules."""
+    class FizzBuzzRule(NamedTuple):
+        """Class used to define FizzBuzz rules."""
 
-    divisor: int
-    response: str
+        divisor: int
+        response: str
 
+    FIZZBUZZ_RULES: list[FizzBuzzRule] = [
+        FizzBuzzRule(divisor=3, response="Fizz"),
+        FizzBuzzRule(divisor=5, response="Buzz"),
+    ]
 
-FIZZBUZZ_RULES: list[FizzBuzzRule] = [
-    FizzBuzzRule(divisor=3, response="Fizz"),
-    FizzBuzzRule(divisor=5, response="Buzz"),
-]
-
-def fizzbuzz_rule_generator(func: FizzBuzzCondition) -> FizzBuzzRuleApplier:
-    """Factory method for creating FizzBuzz rules.
-
-    Args:
-        func (Callable[[int, int], bool]): Function used to check if rule should be applied.
-
-    Returns:
-        Callable[[int], str]: The generated rule.
-    """
-
-    def inner(number: int) -> str:
-        """Rule to be returned.
+    @classmethod
+    def fizzbuzz_rule_generator(cls, func: FizzBuzzCondition) -> FizzBuzzRuleApplier:
+        """Factory method for creating FizzBuzz rules.
 
         Args:
-            number (int): Number to be acted on.
+            func (Callable[[int, int], bool]): Function used to check if rule should be applied.
 
         Returns:
-            str: Response provided after the rule is applied.
+            Callable[[int], str]: The generated rule.
         """
 
-        return "".join(
-            rule.response if func(number, rule.divisor) else ""
-            for rule in FIZZBUZZ_RULES
-        )
+        def inner(number: int) -> str:
+            """Rule to be returned.
 
-    return inner
+            Args:
+                number (int): Number to be acted on.
 
+            Returns:
+                str: Response provided after the rule is applied.
+            """
 
-def fizzbuzz_response_generator(fizzbuzz_rules: FizzBuzzRules) -> FizzBuzzRuleApplier:
-    """Factory method for creating FizzBuzz responders.
+            return "".join(
+                rule.response if func(number, rule.divisor) else ""
+                for rule in cls.FIZZBUZZ_RULES
+            )
 
-    Args:
-        fizzbuzz_rules (FizzBuzzRules): List of rules to be applied.
+        return inner
 
-    Returns:
-        Callable[[int], str]: The generated responder.
-    """
-
-    def inner(number: int) -> str:
-        """Responder to be returned.
+    @staticmethod
+    def fizzbuzz_response_generator(fizzbuzz_rules: FizzBuzzRules) -> FizzBuzzRuleApplier:
+        """Factory method for creating FizzBuzz responders.
 
         Args:
-            number (int): Number on which the rules should be applied.
+            fizzbuzz_rules (FizzBuzzRules): List of rules to be applied.
 
         Returns:
-            str: Reponse obtained after applying the rules.
+            Callable[[int], str]: The generated responder.
         """
 
-        if not isinstance(number, int):
-            raise TypeError("Invalid input type.")
+        def inner(number: int) -> str:
+            """Responder to be returned.
 
-        output = "".join(rule(number) for rule in fizzbuzz_rules)
+            Args:
+                number (int): Number on which the rules should be applied.
 
-        return output if output else str(number)
+            Returns:
+                str: Reponse obtained after applying the rules.
+            """
 
-    return inner
+            if not isinstance(number, int):
+                raise TypeError("Invalid input type.")
+
+            output = "".join(rule(number) for rule in fizzbuzz_rules)
+
+            return output if output else str(number)
+
+        return inner
 
 
-divisibility_rule = fizzbuzz_rule_generator(lambda a, b: a % b == 0)
-contains_rule = fizzbuzz_rule_generator(lambda a, b: str(b) in str(a))
+divisibility_rule = FizzBuzzFactory.fizzbuzz_rule_generator(lambda a, b: a % b == 0)
+contains_rule = FizzBuzzFactory.fizzbuzz_rule_generator(lambda a, b: str(b) in str(a))
 
-fizzbuzz = fizzbuzz_response_generator([divisibility_rule])
-fizzbuzz2 = fizzbuzz_response_generator([contains_rule, divisibility_rule])
+fizzbuzz = FizzBuzzFactory.fizzbuzz_response_generator([divisibility_rule])
+fizzbuzz2 = FizzBuzzFactory.fizzbuzz_response_generator([contains_rule, divisibility_rule])
