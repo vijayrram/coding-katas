@@ -16,7 +16,7 @@ FIZZBUZZ_RULES: list[FizzBuzzRule] = [
 ]
 
 
-def apply_rule(number: int, rule: FizzBuzzRule) -> str:
+def apply_divisibility_rule(number: int, rule: FizzBuzzRule) -> str:
     """Helper function used to apply the FizzBuzz divisibility rule to the input value.
 
     Args:
@@ -30,7 +30,7 @@ def apply_rule(number: int, rule: FizzBuzzRule) -> str:
     return rule.response if number % rule.divisor == 0 else ""
 
 
-def apply_rule2(number: int, rule: FizzBuzzRule) -> str:
+def apply_contains_rule(number: int, rule: FizzBuzzRule) -> str:
     """Helper function used to apply the FizzBuzz contains rule to the input value.
 
     Args:
