@@ -3,33 +3,41 @@
 from typing import Callable, NamedTuple, TypeAlias
 
 
-class FizzBuzzFactory:
+class FizzBuzz:
     """Class containing methods to create a FizzBuzz game."""
 
-    FizzBuzzRuleApplier: TypeAlias = Callable[[int], str]
-    FizzBuzzRules: TypeAlias = list[FizzBuzzRuleApplier]
     FizzBuzzCondition: TypeAlias = Callable[[int, int], bool]
+    FizzBuzzRule: TypeAlias = Callable[[int], str]
+    FizzBuzzResponder: TypeAlias = Callable[[int], str]
 
-    class FizzBuzzRule(NamedTuple):
-        """Class used to define FizzBuzz rules."""
+    class FizzBuzzResponse(NamedTuple):
+        """Class used to define FizzBuzz responses."""
 
         divisor: int
         response: str
 
-    FIZZBUZZ_RULES: list[FizzBuzzRule] = [
-        FizzBuzzRule(divisor=3, response="Fizz"),
-        FizzBuzzRule(divisor=5, response="Buzz"),
-    ]
+    RESPONSES: list[FizzBuzzResponse] = []
 
     @classmethod
-    def fizzbuzz_rule_generator(cls, func: FizzBuzzCondition) -> FizzBuzzRuleApplier:
+    def add_response(cls, digit: int, response: str) -> None:
+        """Method used to add a FizzBuzz response
+
+        Args:
+            digit (int): Digit to be affected
+            response (str): Response to be said instead
+        """
+
+        cls.RESPONSES.append(cls.FizzBuzzResponse(divisor=digit, response=response))
+
+    @classmethod
+    def generate_rule(cls, func: FizzBuzzCondition) -> FizzBuzzRule:
         """Factory method for creating FizzBuzz rules.
 
         Args:
-            func (Callable[[int, int], bool]): Function used to check if rule should be applied.
+            func (FizzBuzzCondition): Function used to check if rule should be applied.
 
         Returns:
-            Callable[[int], str]: The generated rule.
+            FizzBuzzRule: The generated rule.
         """
 
         def inner(number: int) -> str:
@@ -44,20 +52,20 @@ class FizzBuzzFactory:
 
             return "".join(
                 rule.response if func(number, rule.divisor) else ""
-                for rule in cls.FIZZBUZZ_RULES
+                for rule in cls.RESPONSES
             )
 
         return inner
 
     @staticmethod
-    def fizzbuzz_response_generator(fizzbuzz_rules: FizzBuzzRules) -> FizzBuzzRuleApplier:
+    def generate_responder(fizzbuzz_rules: list[FizzBuzzRule]) -> FizzBuzzResponder:
         """Factory method for creating FizzBuzz responders.
 
         Args:
-            fizzbuzz_rules (FizzBuzzRules): List of rules to be applied.
+            fizzbuzz_rules (list[FizzBuzzRule]): List of rules to be applied.
 
         Returns:
-            Callable[[int], str]: The generated responder.
+            FizzBuzzResponder: The generated responder.
         """
 
         def inner(number: int) -> str:
@@ -80,8 +88,8 @@ class FizzBuzzFactory:
         return inner
 
 
-divisibility_rule = FizzBuzzFactory.fizzbuzz_rule_generator(lambda a, b: a % b == 0)
-contains_rule = FizzBuzzFactory.fizzbuzz_rule_generator(lambda a, b: str(b) in str(a))
+divisibility_rule = FizzBuzz.generate_rule(lambda a, b: a % b == 0)
+contains_rule = FizzBuzz.generate_rule(lambda a, b: str(b) in str(a))
 
-fizzbuzz = FizzBuzzFactory.fizzbuzz_response_generator([divisibility_rule])
-fizzbuzz2 = FizzBuzzFactory.fizzbuzz_response_generator([contains_rule, divisibility_rule])
+fizzbuzz = FizzBuzz.generate_responder([divisibility_rule])
+fizzbuzz2 = FizzBuzz.generate_responder([contains_rule, divisibility_rule])
