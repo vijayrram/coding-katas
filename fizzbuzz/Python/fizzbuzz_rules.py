@@ -82,4 +82,5 @@ def fizzbuzz_response_generator(fizzbuzz_rules: FizzBuzzRules) -> Callable[[int]
     return inner
 
 
+fizzbuzz = fizzbuzz_response_generator([apply_divisibility_rule])
 fizzbuzz2 = fizzbuzz_response_generator([apply_contains_rule, apply_divisibility_rule])
