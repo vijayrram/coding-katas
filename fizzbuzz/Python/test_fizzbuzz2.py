@@ -3,7 +3,7 @@
 import typing
 
 import pytest
-from fizzbuzz2 import fizzbuzz2
+from fizzbuzz import fizzbuzz2
 
 
 @pytest.mark.parametrize("number, result", [(1, "1"), (2, "2")])
