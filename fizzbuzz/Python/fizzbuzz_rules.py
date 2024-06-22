@@ -3,7 +3,9 @@
 from typing import Callable, NamedTuple, TypeAlias
 
 
-FizzBuzzRules: TypeAlias = list[Callable[[int], str]]
+FizzBuzzRuleApplier: TypeAlias = Callable[[int], str]
+FizzBuzzRules: TypeAlias = list[FizzBuzzRuleApplier]
+FizzBuzzCondition: TypeAlias = Callable[[int, int], bool]
 
 
 class FizzBuzzRule(NamedTuple):
@@ -18,7 +20,7 @@ FIZZBUZZ_RULES: list[FizzBuzzRule] = [
     FizzBuzzRule(divisor=5, response="Buzz"),
 ]
 
-def fizzbuzz_rule_generator(func: Callable[[int, int], bool]) -> Callable[[int], str]:
+def fizzbuzz_rule_generator(func: FizzBuzzCondition) -> FizzBuzzRuleApplier:
     """Factory method for creating FizzBuzz rules.
 
     Args:
@@ -46,7 +48,7 @@ def fizzbuzz_rule_generator(func: Callable[[int, int], bool]) -> Callable[[int],
     return inner
 
 
-def fizzbuzz_response_generator(fizzbuzz_rules: FizzBuzzRules) -> Callable[[int], str]:
+def fizzbuzz_response_generator(fizzbuzz_rules: FizzBuzzRules) -> FizzBuzzRuleApplier:
     """Factory method for creating FizzBuzz responders.
 
     Args:
