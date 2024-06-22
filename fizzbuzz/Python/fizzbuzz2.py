@@ -1,6 +1,6 @@
 """FizzBuzz Coding Kata"""
 
-from fizzbuzz_rules import FIZZBUZZ_RULES, apply_rule
+from fizzbuzz_rules import FIZZBUZZ_RULES, apply_rule2
 
 
 def fizzbuzz2(number: int) -> str | int:
@@ -16,7 +16,7 @@ def fizzbuzz2(number: int) -> str | int:
     if not isinstance(number, int):
         raise TypeError("Invalid input type.")
 
-    output = "".join(apply_rule(number, rule) for rule in FIZZBUZZ_RULES)
+    output = "".join(apply_rule2(number, rule) for rule in FIZZBUZZ_RULES)
 
     return output if output else str(number)
 
