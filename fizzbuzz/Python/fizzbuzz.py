@@ -1,6 +1,6 @@
 """FizzBuzz Coding Kata"""
 
-from fizzbuzz_rules import FIZZBUZZ_RULES, apply_divisibility_rule
+from fizzbuzz_rules import apply_divisibility_rule
 
 
 def fizzbuzz(number: int) -> str | int:
@@ -16,7 +16,8 @@ def fizzbuzz(number: int) -> str | int:
     if not isinstance(number, int):
         raise TypeError("Invalid input type.")
 
-    output = "".join(apply_divisibility_rule(number, rule) for rule in FIZZBUZZ_RULES)
+    output = ""
+    output += apply_divisibility_rule(number)
 
     return output if output else str(number)
 
