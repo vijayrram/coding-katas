@@ -18,38 +18,32 @@ FIZZBUZZ_RULES: list[FizzBuzzRule] = [
     FizzBuzzRule(divisor=5, response="Buzz"),
 ]
 
-
-def apply_divisibility_rule(number: int) -> str:
-    """Helper function used to apply the FizzBuzz divisibility rule to the input value.
-
-    Args:
-        number (int): Input value.
-        rule (FizzBuzzRule): Rule to be applied.
-
-    Returns:
-        str: Response to be returned.
-    """
-
-    return "".join(rule.response if number % rule.divisor == 0 else "" for rule in FIZZBUZZ_RULES)
-
-
-def apply_contains_rule(number: int) -> str:
-    """Helper function used to apply the FizzBuzz contains rule to the input value.
+def fizzbuzz_rule_generator(func: Callable[[int, int], bool]) -> Callable[[int], str]:
+    """Factory method for creating FizzBuzz rules.
 
     Args:
-        number (int): Input value.
-        rule (FizzBuzzRule): Rule to be applied.
+        func (Callable[[int, int], bool]): Function used to check if rule should be applied.
 
     Returns:
-        str: Response to be returned.
+        Callable[[int], str]: The generated rule.
     """
 
-    return "".join(
-        rule.response
-        if str(rule.divisor) in str(number)
-        else "" for rule in FIZZBUZZ_RULES
-    )
+    def inner(number: int) -> str:
+        """Rule to be returned.
 
+        Args:
+            number (int): Number to be acted on.
+
+        Returns:
+            str: Response provided after the rule is applied.
+        """
+
+        return "".join(
+            rule.response if func(number, rule.divisor) else ""
+            for rule in FIZZBUZZ_RULES
+        )
+
+    return inner
 
 
 def fizzbuzz_response_generator(fizzbuzz_rules: FizzBuzzRules) -> Callable[[int], str]:
@@ -82,5 +76,8 @@ def fizzbuzz_response_generator(fizzbuzz_rules: FizzBuzzRules) -> Callable[[int]
     return inner
 
 
-fizzbuzz = fizzbuzz_response_generator([apply_divisibility_rule])
-fizzbuzz2 = fizzbuzz_response_generator([apply_contains_rule, apply_divisibility_rule])
+divisibility_rule = fizzbuzz_rule_generator(lambda a, b: a % b == 0)
+contains_rule = fizzbuzz_rule_generator(lambda a, b: str(b) in str(a))
+
+fizzbuzz = fizzbuzz_response_generator([divisibility_rule])
+fizzbuzz2 = fizzbuzz_response_generator([contains_rule, divisibility_rule])
