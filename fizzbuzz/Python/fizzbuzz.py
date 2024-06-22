@@ -88,6 +88,9 @@ class FizzBuzz:
         return inner
 
 
+FizzBuzz.add_response(digit=3, response="Fizz")
+FizzBuzz.add_response(digit=5, response="Buzz")
+
 divisibility_rule = FizzBuzz.generate_rule(lambda a, b: a % b == 0)
 contains_rule = FizzBuzz.generate_rule(lambda a, b: str(b) in str(a))
 
