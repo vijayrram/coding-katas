@@ -1,9 +1,10 @@
 """Test script for the FizzBuzz Kata version 2."""
 
 import typing
-import pytest
 
+import pytest
 from fizzbuzz2 import fizzbuzz2
+
 
 @pytest.mark.parametrize("number, result", [(1, "1"), (2, "2")])
 def test_fizzbuzz2(number: int, result):
@@ -107,3 +108,17 @@ def test_fizzbuzz2_containing_5_and_3_but_not_divisible_by_3_or_5(number: int):
     response = fizzbuzz2(number)
 
     assert response == "FizzBuzz"
+
+
+@pytest.mark.parametrize("number", [33, 36, 39])
+def test_fizzbuzz2_containing_only_3_and_divisible_by_only_3(number: int):
+    """Test script to check the response of the fizzbuzz2 function for numbers containing and
+    divisible by 3 but not 5.
+
+    Args:
+        number (int): Input number for the fizzbuzz2 function.
+    """
+
+    response = fizzbuzz2(number)
+
+    assert response == "FizzFizz"

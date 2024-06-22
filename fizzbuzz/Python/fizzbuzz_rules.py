@@ -41,4 +41,4 @@ def apply_rule2(number: int, rule: FizzBuzzRule) -> str:
         str: Response to be returned.
     """
 
-    return rule.response if (number % rule.divisor == 0 or str(rule.divisor) in str(number)) else ""
+    return rule.response if str(rule.divisor) in str(number) else ""
