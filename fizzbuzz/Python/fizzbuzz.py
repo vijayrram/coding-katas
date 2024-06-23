@@ -45,8 +45,8 @@ class FizzBuzz:
             """
 
             return "".join(
-                rule.response if func(number, rule.digit) else ""
-                for rule in self.responses
+                response.response if func(number, response.digit) else ""
+                for response in self.responses
             )
 
         self.rules.append(inner)
