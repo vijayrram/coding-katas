@@ -1,10 +1,10 @@
-"""Rules for FizzBuzz."""
+"""Script for building FizzBuzz responders."""
 
 from typing import Callable, NamedTuple
 
 
 class FizzBuzz:
-    """Class containing methods to create a FizzBuzz game."""
+    """Class containing methods to build a FizzBuzz responder."""
 
     class FizzBuzzResponse(NamedTuple):
         """Class used to define FizzBuzz responses."""
@@ -26,21 +26,18 @@ class FizzBuzz:
 
         self.responses.append(self.FizzBuzzResponse(digit=digit, response=response))
 
-    def add_rule(self, func: Callable[[int, int], bool]) -> Callable[[int], str]:
+    def add_rule(self, func: Callable[[int, int], bool]) -> None:
         """Factory method for creating FizzBuzz rules.
 
         Args:
             func (Callable[[int, int], bool]): Function used to check if rule should be applied.
-
-        Returns:
-            Callable[[int], str]: The generated rule.
         """
 
         def inner(number: int) -> str:
             """Rule to be returned.
 
             Args:
-                number (int): Number to be acted on.
+                number (int): Number on which the rule is applied.
 
             Returns:
                 str: Response provided after the rule is applied.
