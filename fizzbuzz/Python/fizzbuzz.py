@@ -16,10 +16,11 @@ class FizzBuzz:
         divisor: int
         response: str
 
-    RESPONSES: list[FizzBuzzResponse] = []
+    def __init__(self):
+        self.rules: list[self.FizzBuzzRule] = []
+        self.responses: list[self.FizzBuzzResponse] = []
 
-    @classmethod
-    def add_response(cls, digit: int, response: str) -> None:
+    def add_response(self, digit: int, response: str) -> None:
         """Method used to add a FizzBuzz response
 
         Args:
@@ -27,10 +28,9 @@ class FizzBuzz:
             response (str): Response to be said instead
         """
 
-        cls.RESPONSES.append(cls.FizzBuzzResponse(divisor=digit, response=response))
+        self.responses.append(self.FizzBuzzResponse(divisor=digit, response=response))
 
-    @classmethod
-    def generate_rule(cls, func: FizzBuzzCondition) -> FizzBuzzRule:
+    def add_rule(self, func: FizzBuzzCondition) -> FizzBuzzRule:
         """Factory method for creating FizzBuzz rules.
 
         Args:
@@ -52,47 +52,36 @@ class FizzBuzz:
 
             return "".join(
                 rule.response if func(number, rule.divisor) else ""
-                for rule in cls.RESPONSES
+                for rule in self.responses
             )
 
-        return inner
+        self.rules.append(inner)
 
-    @staticmethod
-    def generate_responder(fizzbuzz_rules: list[FizzBuzzRule]) -> FizzBuzzResponder:
-        """Factory method for creating FizzBuzz responders.
+    def __call__(self, number: int) -> str:
+        """Method used to process numbers as per the rules defined.
 
         Args:
-            fizzbuzz_rules (list[FizzBuzzRule]): List of rules to be applied.
+            number (int): Number on which the rules should be applied.
 
         Returns:
-            FizzBuzzResponder: The generated responder.
+            str: Reponse obtained after applying the rules.
         """
 
-        def inner(number: int) -> str:
-            """Responder to be returned.
+        if not isinstance(number, int):
+            raise TypeError("Invalid input type.")
 
-            Args:
-                number (int): Number on which the rules should be applied.
+        output = "".join(rule(number) for rule in self.rules)
 
-            Returns:
-                str: Reponse obtained after applying the rules.
-            """
-
-            if not isinstance(number, int):
-                raise TypeError("Invalid input type.")
-
-            output = "".join(rule(number) for rule in fizzbuzz_rules)
-
-            return output if output else str(number)
-
-        return inner
+        return output if output else str(number)
 
 
-FizzBuzz.add_response(digit=3, response="Fizz")
-FizzBuzz.add_response(digit=5, response="Buzz")
+fizzbuzz = FizzBuzz()
+fizzbuzz.add_response(digit=3, response="Fizz")
+fizzbuzz.add_response(digit=5, response="Buzz")
+fizzbuzz.add_rule(lambda a, b: a % b == 0)
 
-divisibility_rule = FizzBuzz.generate_rule(lambda a, b: a % b == 0)
-contains_rule = FizzBuzz.generate_rule(lambda a, b: str(b) in str(a))
-
-fizzbuzz = FizzBuzz.generate_responder([divisibility_rule])
-fizzbuzz2 = FizzBuzz.generate_responder([contains_rule, divisibility_rule])
+fizzbuzz2 = FizzBuzz()
+fizzbuzz2.add_response(digit=3, response="Fizz")
+fizzbuzz2.add_response(digit=5, response="Buzz")
+fizzbuzz2.add_rule(lambda a, b: str(b) in str(a))
+fizzbuzz2.add_rule(lambda a, b: a % b == 0)
