@@ -6,3 +6,4 @@ languages, primarily Python.
 
 ## List of Coding Katas
 
+1. [FizzBuzz] (fizzbuzz/fizzbuzz.md)
