@@ -1,14 +1,10 @@
 """Rules for FizzBuzz."""
 
-from typing import Callable, NamedTuple, TypeAlias
+from typing import Callable, NamedTuple
 
 
 class FizzBuzz:
     """Class containing methods to create a FizzBuzz game."""
-
-    Condition: TypeAlias = Callable[[int, int], bool]
-    Rule: TypeAlias = Callable[[int], str]
-    Responder: TypeAlias = Callable[[int], str]
 
     class FizzBuzzResponse(NamedTuple):
         """Class used to define FizzBuzz responses."""
@@ -17,7 +13,7 @@ class FizzBuzz:
         response: str
 
     def __init__(self):
-        self.rules: list[self.Rule] = []
+        self.rules: list[Callable[[int], str]] = []
         self.responses: list[self.FizzBuzzResponse] = []
 
     def add_response(self, digit: int, response: str) -> None:
@@ -30,14 +26,14 @@ class FizzBuzz:
 
         self.responses.append(self.FizzBuzzResponse(digit=digit, response=response))
 
-    def add_rule(self, func: Condition) -> Rule:
+    def add_rule(self, func: Callable[[int, int], bool]) -> Callable[[int], str]:
         """Factory method for creating FizzBuzz rules.
 
         Args:
-            func (FizzBuzzCondition): Function used to check if rule should be applied.
+            func (Callable[[int, int], bool]): Function used to check if rule should be applied.
 
         Returns:
-            FizzBuzzRule: The generated rule.
+            Callable[[int], str]: The generated rule.
         """
 
         def inner(number: int) -> str:
