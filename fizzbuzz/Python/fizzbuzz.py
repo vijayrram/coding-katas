@@ -3,11 +3,24 @@
 from typing import Callable, NamedTuple
 
 
-class FizzBuzzResponse(NamedTuple):
+class FizzBuzzResponder(NamedTuple):
     """Class used to define FizzBuzz responses."""
 
     digit: int
     response: str
+
+    def evaluate(self, number: int, func: Callable[[int, int], bool]) -> str:
+        """Method to evaluate a number according to a rule and respond appropriately.
+
+        Args:
+            number (int): Number to be evaluated.
+            func (Callable[[int, int], bool]): Function used to evaluate the number
+
+        Returns:
+            str: Evaluated response.
+        """
+
+        return self.response if func(number, self.digit) else ""
 
 
 class FizzBuzz:
@@ -15,7 +28,7 @@ class FizzBuzz:
 
     def __init__(self):
         self.rules: list[Callable[[int], str]] = []
-        self.responses: list[FizzBuzzResponse] = []
+        self.responders: list[FizzBuzzResponder] = []
 
     def add_response(self, digit: int, response: str) -> None:
         """Method used to add a FizzBuzz response
@@ -25,7 +38,7 @@ class FizzBuzz:
             response (str): Response to be said instead
         """
 
-        self.responses.append(FizzBuzzResponse(digit=digit, response=response))
+        self.responders.append(FizzBuzzResponder(digit=digit, response=response))
 
     def add_rule(self, func: Callable[[int, int], bool]) -> None:
         """Factory method for creating FizzBuzz rules.
@@ -44,10 +57,7 @@ class FizzBuzz:
                 str: Response provided after the rule is applied.
             """
 
-            return "".join(
-                response.response if func(number, response.digit) else ""
-                for response in self.responses
-            )
+            return "".join(responder.evaluate(number, func) for responder in self.responders)
 
         self.rules.append(inner)
 
