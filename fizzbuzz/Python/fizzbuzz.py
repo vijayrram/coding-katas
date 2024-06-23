@@ -6,9 +6,9 @@ from typing import Callable, NamedTuple, TypeAlias
 class FizzBuzz:
     """Class containing methods to create a FizzBuzz game."""
 
-    FizzBuzzCondition: TypeAlias = Callable[[int, int], bool]
-    FizzBuzzRule: TypeAlias = Callable[[int], str]
-    FizzBuzzResponder: TypeAlias = Callable[[int], str]
+    Condition: TypeAlias = Callable[[int, int], bool]
+    Rule: TypeAlias = Callable[[int], str]
+    Responder: TypeAlias = Callable[[int], str]
 
     class FizzBuzzResponse(NamedTuple):
         """Class used to define FizzBuzz responses."""
@@ -17,7 +17,7 @@ class FizzBuzz:
         response: str
 
     def __init__(self):
-        self.rules: list[self.FizzBuzzRule] = []
+        self.rules: list[self.Rule] = []
         self.responses: list[self.FizzBuzzResponse] = []
 
     def add_response(self, digit: int, response: str) -> None:
@@ -30,7 +30,7 @@ class FizzBuzz:
 
         self.responses.append(self.FizzBuzzResponse(divisor=digit, response=response))
 
-    def add_rule(self, func: FizzBuzzCondition) -> FizzBuzzRule:
+    def add_rule(self, func: Condition) -> Rule:
         """Factory method for creating FizzBuzz rules.
 
         Args:
