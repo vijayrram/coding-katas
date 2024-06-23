@@ -31,7 +31,7 @@ class FizzBuzz:
         self.responders: list[FizzBuzzResponder] = []
 
     def add_response(self, digit: int, response: str) -> None:
-        """Method used to add a FizzBuzz response
+        """Method used to add a response used when checking the number against the passed digit.
 
         Args:
             digit (int): Digit to be affected
@@ -41,7 +41,8 @@ class FizzBuzz:
         self.responders.append(FizzBuzzResponder(digit=digit, response=response))
 
     def add_rule(self, func: Callable[[int, int], bool]) -> None:
-        """Factory method for creating FizzBuzz rules.
+        """Factory method for adding rules to be applied to the numbers. Rules are executed in the
+        order they are added.
 
         Args:
             func (Callable[[int, int], bool]): Function used to check if rule should be applied.
