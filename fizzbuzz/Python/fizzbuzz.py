@@ -3,18 +3,19 @@
 from typing import Callable, NamedTuple
 
 
+class FizzBuzzResponse(NamedTuple):
+    """Class used to define FizzBuzz responses."""
+
+    digit: int
+    response: str
+
+
 class FizzBuzz:
     """Class containing methods to build a FizzBuzz responder."""
 
-    class FizzBuzzResponse(NamedTuple):
-        """Class used to define FizzBuzz responses."""
-
-        digit: int
-        response: str
-
     def __init__(self):
         self.rules: list[Callable[[int], str]] = []
-        self.responses: list[self.FizzBuzzResponse] = []
+        self.responses: list[FizzBuzzResponse] = []
 
     def add_response(self, digit: int, response: str) -> None:
         """Method used to add a FizzBuzz response
@@ -24,7 +25,7 @@ class FizzBuzz:
             response (str): Response to be said instead
         """
 
-        self.responses.append(self.FizzBuzzResponse(digit=digit, response=response))
+        self.responses.append(FizzBuzzResponse(digit=digit, response=response))
 
     def add_rule(self, func: Callable[[int, int], bool]) -> None:
         """Factory method for creating FizzBuzz rules.
