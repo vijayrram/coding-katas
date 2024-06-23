@@ -78,10 +78,10 @@ class FizzBuzz:
 fizzbuzz = FizzBuzz()
 fizzbuzz.add_response(digit=3, response="Fizz")
 fizzbuzz.add_response(digit=5, response="Buzz")
-fizzbuzz.add_rule(lambda a, b: a % b == 0)
+fizzbuzz.add_rule(lambda number, divisor: number % divisor == 0)
 
 fizzbuzz2 = FizzBuzz()
 fizzbuzz2.add_response(digit=3, response="Fizz")
 fizzbuzz2.add_response(digit=5, response="Buzz")
-fizzbuzz2.add_rule(lambda a, b: str(b) in str(a))
-fizzbuzz2.add_rule(lambda a, b: a % b == 0)
+fizzbuzz2.add_rule(lambda number, digit: str(digit) in str(number))
+fizzbuzz2.add_rule(lambda number, divisor: number % divisor == 0)
