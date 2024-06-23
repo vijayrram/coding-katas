@@ -13,7 +13,7 @@ class FizzBuzz:
     class FizzBuzzResponse(NamedTuple):
         """Class used to define FizzBuzz responses."""
 
-        divisor: int
+        digit: int
         response: str
 
     def __init__(self):
@@ -28,7 +28,7 @@ class FizzBuzz:
             response (str): Response to be said instead
         """
 
-        self.responses.append(self.FizzBuzzResponse(divisor=digit, response=response))
+        self.responses.append(self.FizzBuzzResponse(digit=digit, response=response))
 
     def add_rule(self, func: Condition) -> Rule:
         """Factory method for creating FizzBuzz rules.
@@ -51,7 +51,7 @@ class FizzBuzz:
             """
 
             return "".join(
-                rule.response if func(number, rule.divisor) else ""
+                rule.response if func(number, rule.digit) else ""
                 for rule in self.responses
             )
 
