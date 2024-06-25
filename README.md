@@ -7,3 +7,4 @@ languages, primarily Python.
 ## List of Coding Katas
 
 1. [FizzBuzz](fizzbuzz/fizzbuzz.md)
+1. [Anagram](anagram/anagram.md)
