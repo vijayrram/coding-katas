@@ -9,8 +9,12 @@ if __name__ == "__main__":
         for line in file:
             wordlist.extend(line.split())
 
+    valid_anagrams = []
     sorted_word_to_anagram = sorted(word_to_anagram)
     for index, first in enumerate(wordlist):
         for second in wordlist[index+1:]:
             if sorted_word_to_anagram == sorted(first + second):
-                print(f"{word_to_anagram} = {first} + {second}")
+                valid_anagrams.append((first, second))
+
+    for first, second in valid_anagrams:
+        print(f"{word_to_anagram} = {first} + {second}")
